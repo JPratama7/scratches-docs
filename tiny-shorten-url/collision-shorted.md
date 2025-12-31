@@ -113,14 +113,14 @@ architecture-beta
     service lb(cloud)[Load Balancer]
 
     group api1(cloud)[API] in region1
-    service db1(database)[Database] in api1
+    service db1(database)[Database] in region1
     service server1(server)[Server] in api1
-    service cache1(database)[Cache] in api1
+    service cache1(database)[Cache] in region1
 
     group api2(cloud)[API] in region2
-    service db2(database)[Database] in api2
+    service db2(database)[Database] in region2
     service server2(server)[Server] in api2
-    service cache2(database)[Cache] in api2
+    service cache2(database)[Cache] in region2
 
     lb:B -- T:server1
     lb:B -- T:server2
