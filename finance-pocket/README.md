@@ -254,8 +254,11 @@ sequenceDiagram
     B ->> A: Return transaction list
 ```
 
-#### Summarize, analyze, and visualize transactions
-> **_NOTE_**: This workflow processes transactions and categorizes them over time periods e.g weekly, monthly, and annually and only runs on the last period's time. 
+#### Summarize, analyze, and visualize periodic transactions
+> **_NOTE_**: This workflow processes transactions and categorizes them over time periods e.g weekly, monthly, and annually and only runs on the last period's time.
+
+> **_TODO_**: This workflow can be improved to support real-time updates and more sophisticated analytics.
+
 ```mermaid
 sequenceDiagram
     participant A as User
@@ -284,4 +287,20 @@ sequenceDiagram
     B ->> A: Return summarized financial insights
 ```
 
+#### Fetch Financial Insights
+```mermaid
+sequenceDiagram
+    participant A as User
+    participant B as Backend Service
+    participant F as Analytics Service
 
+    A ->> B: Request financial insights
+    B ->> B: validate user
+    alt Invalid User
+        B ->> A: Return error
+    end
+
+    B ->> F: Request financial insights
+    F ->> B: Return financial insights
+    B ->> A: Return financial insights
+```
