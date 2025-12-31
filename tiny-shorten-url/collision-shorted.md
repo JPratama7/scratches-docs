@@ -99,7 +99,7 @@ sequenceDiagram
             DB-->>Service: Return URL
         end
     else Cache hit
-        Cache->>Service: Return URL    
+        Cache-->>Service: Return URL    
     end
     Service-->>User: Redirect to original URL
 ```
@@ -110,17 +110,17 @@ architecture-beta
     group region1(cloud)[Region 1]
     group region2(cloud)[Region 2]
 
-    service lb(logos:aws-elb)[Load Balancer]
+    service lb(cloud)[Load Balancer]
 
-    group api1(logos:aws-api-gateway)[API] in region1
-    service db1(logos:aws-aurora)[Database] in api1
-    service server1(logos:aws-lambda)[Server] in api1
-    service cache1(logos:aws-elasticache)[Cache] in api1
+    group api1(cloud)[API] in region1
+    service db1(database)[Database] in api1
+    service server1(server)[Server] in api1
+    service cache1(database)[Cache] in api1
 
-    group api2(logos:aws-api-gateway)[API] in region2
-    service db2(logos:aws-aurora)[Database] in api2
-    service server2(logos:aws-lambda)[Server] in api2
-    service cache2(logos:aws-elasticache)[Cache] in api2
+    group api2(cloud)[API] in region2
+    service db2(database)[Database] in api2
+    service server2(server)[Server] in api2
+    service cache2(database)[Cache] in api2
 
     lb:B -- T:server1
     lb:B -- T:server2
