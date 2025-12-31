@@ -255,7 +255,7 @@ sequenceDiagram
 ```
 
 #### Summarize, analyze, and visualize transactions
-> **_NOTE_**: This workflow processes transactions and categorizes them over time periods e.g weekly, monthly, and annually.
+> **_NOTE_**: This workflow processes transactions and categorizes them over time periods e.g weekly, monthly, and annually and only runs on the last period's time. 
 ```mermaid
 sequenceDiagram
     participant A as User
@@ -270,13 +270,14 @@ sequenceDiagram
     end
 
     B ->> B: Generate time period
-    
-    B ->> D: Check if already analyzed for this period
-    alt Already analyzed
-        D ->> B: Return cached analysis results
-        B ->> A: Return cached analysis results
+
+    B ->> B: Check if in last period's time
+    alt Not in last period
+        B ->> A: Return no analysis needed
     end
-    
+
+    B ->> D: Query all transactions on the period
+
     B ->> F: Send transaction data for analysis
     F ->> B: Return analysis results (spending trends, categories, etc.)
     B ->> D: Save analysis results to database
