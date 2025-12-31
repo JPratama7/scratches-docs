@@ -90,7 +90,17 @@ sequenceDiagram
 
     User->>Service: Access short URL
     Service->>Cache: Lookup ID mapping
-    Cache-->>Service: Return original URL
+    alt Cache miss
+        Service->>DB: Lookup ID mapping
+        alt if not found in DB
+            Service->>User: 404 Not Found
+        else if found in DB
+            Service->>Cache: Store mapping
+            DB-->>Service: Return URL
+        end
+    else Cache hit
+        Cache->>Service: Return URL    
+    end
     Service-->>User: Redirect to original URL
 ```
 ### Infrastructure Architecture
@@ -105,16 +115,21 @@ architecture-beta
     group api1(logos:aws-api-gateway)[API] in region1
     service db1(logos:aws-aurora)[Database] in api1
     service server1(logos:aws-lambda)[Server] in api1
+    service cache1(logos:aws-elasticache)[Cache] in api1
 
     group api2(logos:aws-api-gateway)[API] in region2
     service db2(logos:aws-aurora)[Database] in api2
     service server2(logos:aws-lambda)[Server] in api2
+    service cache2(logos:aws-elasticache)[Cache] in api2
 
     lb:B -- T:server1
     lb:B -- T:server2
     db1:T -- B:server1
     db2:T -- B:server2
     db1:R -- L:db2
+
+    cache1:R -- L:server1
+    cache2:R -- L:server2
 ```
 
 
