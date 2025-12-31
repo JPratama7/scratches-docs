@@ -150,26 +150,20 @@ erDiagram
 ```
 
 ### High level
-
 ```mermaid
-flowchart LR
-    A[Mobile/Web App]
-    B[API Gateway]
-    C[Load Balancer]
-    E[Database]
-    F[Storage]
+flowchart TB
+    app[Mobile/Web App]
+    lb[Load Balancer]
+    gateway[API Gateway]
+    db[(Database)]
+    storage[(Storage)]
+    backend[Backend]
 
-    subgraph Backend[Backend Services]
-        D1[Service 1]
-        D2[Service 2]
-        D3[Service 3]
-    end
-
-    A --> B
-    B --> C
-    C --> Backend
-    Backend --> F
-    Backend --> E
+    app --> lb
+    lb --> gateway
+    gateway --> backend
+    backend --> db
+    backend --> storage
 ```
 
 ### System Workflow
