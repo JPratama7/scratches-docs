@@ -166,6 +166,14 @@ flowchart TB
     backend --> storage
 ```
 
+### Technology Stack
+> **_Note_**: this not final
+
+- **Frontend**: SvelteKit
+- **Backend**: Golang + Fiber
+- **Database**: Postgresql
+- **Storage**: AWS S3 (or compatible object storage)
+
 ### System Workflow
 
 #### Submit Transaction from Picture
