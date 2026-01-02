@@ -3,4 +3,4 @@ This repository contains various research documents and code scratches for perso
 ## Structure
 
 - `finance-pocket/` - Finance pocket management system research and design documents
-- `tiny-shortened/` - Tiny URL shortening service research and design documents
+- `tiny-shorten-url/` - Tiny URL shortening service research and design documents

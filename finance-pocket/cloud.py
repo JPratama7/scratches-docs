@@ -9,12 +9,7 @@ from diagrams.aws.general import Client
 from diagrams.onprem.queue import Kafka, ActiveMQ
 
 
-with Diagram("Finance Pocket Architecture", show=False, direction="TB",
-             graph_attr={"pad": "0.5", "nodesep": "0.8", "ranksep": "1.2", "splines": "ortho"},
-             node_attr={"shape": "box", "style": "rounded"},
-             edge_attr={"arrowsize": "1.5"}):
-
-
+with Diagram("Finance Pocket Architecture", show=False, direction="TB", strict=True):
     nlb = NLB("Load Balancer")
 
     with Cluster("Services"):
@@ -33,8 +28,8 @@ with Diagram("Finance Pocket Architecture", show=False, direction="TB",
     with Cluster("Data Layer"):
         with Cluster("Database", direction="TB"):
             db_primary = Aurora("primary")
-            replica = Aurora("replica")
-            db_primary - replica
+            read_replica = Aurora("read replica")
+            db_primary - read_replica
 
         cache = ElastiCache("Redis")
         kafka = Kafka("Kafka")
@@ -44,8 +39,8 @@ with Diagram("Finance Pocket Architecture", show=False, direction="TB",
 
     api >> kafka >> background
 
-    background >> db_primary
-    background >> replica
+    celery >> read_replica
+    celery >> db_primary
 
     api >> db_primary
     api >> cache
