@@ -150,21 +150,7 @@ erDiagram
 ```
 
 ### High level
-```mermaid
-flowchart TB
-    app[Mobile/Web App]
-    lb[Load Balancer]
-    gateway[API Gateway]
-    db[(Database)]
-    storage[(Storage)]
-    backend[Backend]
-
-    app --> lb
-    lb --> gateway
-    gateway --> backend
-    backend --> db
-    backend --> storage
-```
+![High Level Diagram](./finance_pocket_architecture.png)
 
 ### Technology Stack
 > **_Note_**: this not final
